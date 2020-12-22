@@ -1,0 +1,96 @@
+<div class="container p-2">
+    <div class="card p-2">
+        <h2 class="text-center">Edit Appliance</h2>
+
+        <div *ngIf="errorResults?.length > 0">
+            <div *ngFor="let error of errorResults; let i = index" class="alert alert-danger form-danger" role="alert">
+                <label for="boughtDate">{{error}}</label>
+            </div>
+        </div>
+
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="hidden">
+                <input type="hidden" formControlName="id" placeholder="id" name="id" class="form-control" id="id">
+            </div>
+            <div class="form-group col-xs-10 col-sm-8 col-md-8 col-lg-8">
+                <label for="serialNumber">SerialNumber:</label>
+                <div *ngIf="submitted && editForm.controls['serialNumber'].errors"
+                    class="alert alert-danger form-danger" role="alert">
+                    <div *ngIf="editForm.controls['serialNumber'].errors.required">SerialNumber can't be empty</div>
+                </div>
+                <div *ngIf="editForm.controls['serialNumber'].invalid && (editForm.controls['serialNumber'].dirty || editForm.controls['serialNumber'].touched)"
+                    class="alert alert-danger form-danger" role="alert">
+                    <label for="serialNumber">SerialNumber Required</label>
+                </div>
+                <input type="text" [ngClass]="{ 'is-invalid': submitted && f.serialNumber.errors }"
+                    formControlName="serialNumber" placeholder="serialNumber" name="serialNumber" class="form-control"
+                    id="serialNumber">
+            </div>
+
+            <div class="form-group col-xs-10 col-sm-8 col-md-8 col-lg-8">
+                <label for="brand">Brand:</label>
+                <div *ngIf="submitted && editForm.controls['brand'].errors" class="alert alert-danger form-danger"
+                    role="alert">
+                    <div *ngIf="editForm.controls['brand'].errors.required">Brand can't be empty</div>
+                </div>
+                <div *ngIf="editForm.controls['brand'].invalid && (editForm.controls['brand'].dirty || editForm.controls['brand'].touched)"
+                    class="alert alert-danger form-danger" role="alert">
+                    <label for="brand">Brand Required</label>
+                </div>
+                <input type="text" [ngClass]="{ 'is-invalid': submitted && f.brand.errors }" formControlName="brand"
+                    placeholder="brand" name="brand" class="form-control" id="brand">
+            </div>
+
+            <div class="form-group col-xs-10 col-sm-8 col-md-8 col-lg-8">
+                <label for="model">Model:</label>
+                <div *ngIf="submitted && editForm.controls['model'].errors" class="alert alert-danger form-danger"
+                    role="alert">
+                    <div *ngIf="editForm.controls['model'].errors.required">Model can't be empty</div>
+                </div>
+                <div *ngIf="editForm.controls['model'].invalid && (editForm.controls['model'].dirty || editForm.controls['model'].touched)"
+                    class="alert alert-danger form-danger" role="alert">
+                    <label for="model">Model Required</label>
+                </div>
+                <input type="text" [ngClass]="{ 'is-invalid': submitted && f.model.errors }" formControlName="model"
+                    placeholder="model" name="model" class="form-control" id="model">
+            </div>
+
+            <div class="form-group col-xs-10 col-sm-8 col-md-8 col-lg-8">
+                <div *ngIf="editForm.controls['status'].invalid && (editForm.controls['status'].dirty || editForm.controls['status'].touched)"
+                    class="alert alert-danger form-danger" role="alert">
+                    <label for="status">Status Required</label>
+                </div>
+                <label for="status">Status:</label>
+                <select class="form-control" formControlName="status">
+                    <option value="">Choose Status</option>
+                    <option *ngFor="let status of keys" [ngValue]="statusList[status]">{{status}}</option>
+                </select>
+            </div>
+
+            <div class="form-group col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                <label for="boughtDate">Bought Date:</label>
+                <div *ngIf="submitted && editForm.controls['boughtDate'].errors" class="alert alert-danger form-danger"
+                    role="alert">
+                    <div *ngIf="editForm.controls['boughtDate'].errors.required">BoughtDate can't be empty</div>
+                </div>
+                <div *ngIf="editForm.controls['boughtDate'].invalid && (editForm.controls['boughtDate'].dirty || editForm.controls['boughtDate'].touched)"
+                    class="alert alert-danger form-danger" role="alert">
+                    <label for="boughtDate">BoughtDate Required</label>
+                </div>
+                <div class="input-group">
+                    <input class="form-control" [ngClass]="{ 'is-invalid': submitted && f.boughtDate.errors }"
+                        placeholder="yyyy-mm-dd" formControlName="boughtDate" name="boughtDate" ngbDatepicker
+                        #d="ngbDatepicker" id="boughtDate">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
+                                class="far fa-calendar-alt"></i></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="btn btn-success ml-2">Update</button>
+            <button class="btn btn-secondary ml-1" type="reset" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
+</div>

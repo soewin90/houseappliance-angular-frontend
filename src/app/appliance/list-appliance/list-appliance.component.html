@@ -1,0 +1,95 @@
+<div class="container">
+    <h2 style="margin: auto"> Appliance Details</h2>
+
+    <div class="flex pt-2">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="card-title">Filter</h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="form-row align-items-center">
+                        <div class="col-auto p-1">
+                            <label for="serialNumber">SerialNumber:</label>
+                            <input type="text" placeholder="SerialNumber" formControlName="serialNumber"
+                                name="serialNumber" class="form-control" id="serialNumber">
+                        </div>
+                        <div class="col-auto p-1">
+                            <label for="brand">Brand:</label>
+                            <input type="text" placeholder="Brand" name="brand" formControlName="brand"
+                                class="form-control" id="brand">
+                        </div>
+                        <div class="col-auto p-1">
+                            <label for="model">Model:</label>
+                            <input type="text" placeholder="Model" name="model" formControlName="model"
+                                class="form-control" id="model">
+                        </div>
+                        <div class="col-auto p-1">
+                            <label for="status">Status:</label>
+                            <select class="form-control" formControlName="status">
+                                <option value="">Choose Status</option>
+                                <option *ngFor="let status of keys" [ngValue]="statusList[status]">
+                                    {{status}}</option>
+                            </select>
+                        </div>
+                        <div class="col-auto p-1">
+                            <label for="boughtDate">BoughtDate:</label>
+                            <div class="input-group">
+                                <input placeholder="yyyy-mm-dd" formControlName="boughtDate" name="boughtDate"
+                                    class="form-control" ngbDatepicker #d="ngbDatepicker" id="boughtDate">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
+                                            class="far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search form-control-feedback"></i>
+                        Search</button>
+                    <button class="btn btn-warning ml-1" type="reset" (click)="onReset()">Reset</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <div class="p-2 ml-auto">
+            <button class="btn btn-success" (click)="addAppliance()"><i class="fas fa-plus"></i> Add Appliance</button>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Serial Number</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Status</th>
+                <th>BoughtDate</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let appliance of appliances; let i = index;">
+                <td>{{i+1}}</td>
+                <td>{{appliance.serialNumber}}</td>
+                <td>{{appliance.brand}}</td>
+                <td>{{appliance.model}}</td>
+                <td>{{appliance.status}}</td>
+                <td>{{appliance.boughtDate | date:"mediumDate" }}</td>
+                <td><button class="btn btn-danger" (click)="deleteAppliance(appliance)"><i class="far fa-trash-alt"></i>
+                        Delete</button>
+                    <button class="btn btn-warning ml-2" (click)="editAppliance(appliance)"><i class="far fa-edit"></i>
+                        Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</div>
